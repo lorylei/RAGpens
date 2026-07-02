@@ -1,0 +1,19 @@
+__pycache__/
+*.py[cod]
+.ipynb_checkpoints/
+.pytest_cache/
+.venv/
+
+# PENS data and intermediate retrieval files
+rag/data/LaMP_4/
+rag/point_base*.json
+data/
+
+# Model checkpoints and generation outputs
+rag/*_outputs/
+outputs/
+*.safetensors
+*.pt
+
+# Local notebook/runtime state
+content/
