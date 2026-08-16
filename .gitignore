@@ -7,7 +7,7 @@ __pycache__/
 # PENS data and intermediate retrieval files
 rag/data/LaMP_4/
 rag/point_base*.json
-data/
+/data/
 
 # Model checkpoints and generation outputs
 rag/*_outputs/

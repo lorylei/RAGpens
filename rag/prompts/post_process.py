@@ -1,129 +1,14 @@
-import re
-def post_process_LaMP_1(results):
-    return results
-
-
-def post_process_LaMP_2(results):
+def post_process(results):
     processed_results = []
-    for generate_data in results:
-        processed_predict = generate_data.strip('\'\"')
-        processed_results.append(processed_predict)
-    return processed_results
-
-
-def post_process_LaMP_3(results):
-    processed_results = []
-    for generate_data in results:
-        try:
-            score = int(round(float(generate_data), 0))
-            processed_predict = str(score)
-        except:
-            begin_index = generate_data.find("'score': ")
-            if begin_index == -1:
-                begin_index = generate_data.find("\"score\": ")
-                if begin_index != -1:
-                    begin_index += len("\"score\": ")
-            else:
-                begin_index += len("'score': ")
-            if begin_index == -1:
-                processed_predict = '3'
-            else:
-                end_index = generate_data[begin_index:].find('}') + begin_index
-                processed_predict = generate_data[begin_index:end_index]
-
-        processed_results.append(processed_predict)
-    return processed_results
-
-
-# def post_process_LaMP_4(results):
-#     processed_results = []
-#     for generate_data in results:
-#         begin_index = generate_data.find("'title': '")
-#         if begin_index == -1:
-#             begin_index = generate_data.find("\"title\": \"")
-#             begin_index += len("\"title\": \"")
-#             end_index = generate_data[begin_index:].find("\"}") + begin_index
-#         else:
-#             begin_index += len("'title': '")
-#             end_index = generate_data[begin_index:].find("'}") + begin_index
-#         processed_predict = generate_data[begin_index:end_index]
-#         processed_results.append(processed_predict)
-#     return processed_results
-
-# def post_process_LaMP_4(results):
-#     processed_results = []
-#     for generate_data in results:
-#         s = generate_data
-#         idx = s.find("}")
-#         if idx != -1:
-#             s = s[:idx].strip()
-#         processed_results.append(s)
-#     return processed_results
-def post_process_LaMP_4(results):
-    processed_results = []
-    for s in results:
+    for text in results:
         prefix = "{'title': "
-        if s.startswith(prefix):
-            s = s.removeprefix(prefix)
-        if "}" in s:
-            s = s.split("}", 1)[0]
-        s = s.strip()
-        if (s.startswith("'") and s.endswith("'")) or (s.startswith('"') and s.endswith('"')):
-            s = s[1:-1]
-        s = s.strip()
-        
-        processed_results.append(s)
+        if text.startswith(prefix):
+            text = text.removeprefix(prefix)
+        if "}" in text:
+            text = text.split("}", 1)[0]
+        text = text.strip()
+        if ((text.startswith("'") and text.endswith("'")) or
+                (text.startswith('"') and text.endswith('"'))):
+            text = text[1:-1]
+        processed_results.append(text.strip())
     return processed_results
-
-
-
-
-def post_process_LaMP_5(results):
-    processed_results = []
-    for generate_data in results:
-        begin_index = generate_data.find("'title': '")
-        if begin_index == -1:
-            begin_index = generate_data.find("\"title\": \"")
-            begin_index += len("\"title\": \"")
-            end_index = generate_data[begin_index:].find("\"}") + begin_index
-        else:
-            begin_index += len("'title': '")
-            end_index = generate_data[begin_index:].find("'}") + begin_index
-        processed_predict = generate_data[begin_index:end_index]
-        processed_results.append(processed_predict)
-    return processed_results
-
-
-def post_process_LaMP_7(results):
-    processed_results = []
-    for generate_data in results:
-        begin_index = generate_data.find("'tweet': '")
-        if begin_index == -1:
-            begin_index = generate_data.find("\"tweet\": \"")
-            begin_index += len("\"tweet\": \"")
-            end_index = generate_data[begin_index:].find("\"}") + begin_index
-        else:
-            begin_index += len("'tweet': '")
-            end_index = generate_data[begin_index:].find("'}") + begin_index
-
-        processed_predict = generate_data[begin_index:end_index]
-        processed_results.append(processed_predict)
-    return processed_results
-
-
-def load_post_process_function(task):
-    if task.startswith('LaMP_1'):
-        return post_process_LaMP_1
-    elif task.startswith('LaMP_2'):
-        return post_process_LaMP_2
-    elif task.startswith('LaMP_3'):
-        return post_process_LaMP_3
-    elif task.startswith('LaMP_4'):
-        return post_process_LaMP_4
-    elif task.startswith('LaMP_5'):
-        return post_process_LaMP_5
-    elif task.startswith('LaMP_7'):
-        return post_process_LaMP_7
-    else:
-        raise ValueError('task error')
-
