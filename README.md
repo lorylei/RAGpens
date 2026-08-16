@@ -36,10 +36,10 @@ python rag/generation/test.py --input_file data/rewritten/bm25_8/point_base_bm25
 
 ```text
 pens_rag_pipeline.ipynb  complete Colab pipeline
-rag/data/preprocess.py   PENS preprocessing from Untitled6
+rag/data/preprocess.py   PENS data preprocessing 
 rag/ranking.py           BM25, BGE, and random retrieval
 rag/generation/test.py   vLLM generation and ROUGE/BLEU evaluation
-rag/generation/generate.py  Untitled10-compatible entry point
+rag/generation/generate.py  
 rag/prompts/             RAG prompt and output post-processing
 rag/metrics/             headline evaluation
 ```
